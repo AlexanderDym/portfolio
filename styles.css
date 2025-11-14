@@ -76,6 +76,7 @@ img {
    ========================= */
 .slider-zone {
   position: relative;
+  
 }
 
 /* =========================
@@ -96,10 +97,12 @@ img {
 
 /* Базовая позиция (мобайл/планшет мы скрываем в media ниже) */
 .nav-zone--left {
+
 }
 
 .nav-zone--right {
    background: transparent !important;
+
 }
 
 .nav-zone::after {
@@ -192,14 +195,14 @@ img {
    ========================= */
 .media-card {
   background-color: var(--bg-card-soft);
-  border-radius: 32px;
+  border-radius: 0px; 
   padding: 8px;
 }
 
 .slider {
   position: relative;
   overflow: hidden;
-  border-radius: 26px;
+  border-radius: 0px; 
 }
 
 .slider-track {
@@ -209,19 +212,13 @@ img {
   will-change: transform;
 }
 
-/* ВАЖНО: говорим браузеру "вертикальный скролл ок, горизонтальный — отдай JS" */
-.slider-track,
-.text-slider-track {
-  touch-action: pan-y;
-}
-
 .slider-slide {
   flex: 0 0 100%;
 }
 
 .slider-slide--image img {
   width: 100%;
-  border-radius: 22px;
+  border-radius: 0px; //
 }
 
 /* =========================

@@ -358,7 +358,9 @@ function createLoopSlider({
   let isTransitioning = false;
 
   function setTransition(enable) {
-    trackEl.style.transition = enable ? "transform 0.35s ease-out" : "none";
+    trackEl.style.transition = enable
+      ? "transform 0.6s cubic-bezier(.34,0.96,.64,1)"
+      : "none";
   }
 
   function applyTransform() {
