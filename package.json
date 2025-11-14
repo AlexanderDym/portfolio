@@ -3,12 +3,7 @@
   "version": "1.0.0",
   "description": "Alexander Dym portfolio – static site (HTML/CSS/JS)",
   "scripts": {
- "start": "npx http-server ./dist",
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "start": "npx http-server ./dist"
   },
   "dependencies": {
     "serve": "^14.2.1"
