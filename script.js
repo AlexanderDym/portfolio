@@ -146,8 +146,9 @@ function renderCase(index) {
   const imageSliderEl = document.querySelector('[data-slider="images"]');
   const imageTrack = document.querySelector('[data-slider-track="images"]');
   const imageDots = document.querySelector('[data-slider-dots="images"]');
-  const imagePrev = document.querySelector('[data-slider-arrow="images-prev"]');
-  const imageNext = document.querySelector('[data-slider-arrow="images-next"]');
+  // ИСПРАВЛЕНО: берём по data-nav-zone, как в HTML
+  const imagePrev = document.querySelector('[data-nav-zone="images-prev"]');
+  const imageNext = document.querySelector('[data-nav-zone="images-next"]');
 
   if (imageSliderInstance && imageSliderInstance.destroy) {
     imageSliderInstance.destroy();
@@ -185,8 +186,9 @@ function renderCase(index) {
   const textSliderEl = document.querySelector('[data-slider="text"]');
   const textTrack = document.querySelector('[data-slider-track="text"]');
   const textDots = document.querySelector('[data-slider-dots="text"]');
-  const textPrev = document.querySelector('[data-slider-arrow="text-prev"]');
-  const textNext = document.querySelector('[data-slider-arrow="text-next"]');
+  // ИСПРАВЛЕНО: data-nav-zone
+  const textPrev = document.querySelector('[data-nav-zone="text-prev"]');
+  const textNext = document.querySelector('[data-nav-zone="text-next"]');
 
   if (textSliderInstance && textSliderInstance.destroy) {
     textSliderInstance.destroy();
@@ -252,12 +254,9 @@ function initProjectsSlider() {
   const sliderEl = document.querySelector('[data-slider="projects"]');
   const trackEl = document.querySelector('[data-slider-track="projects"]');
   const dotsEl = document.querySelector('[data-slider-dots="projects"]');
-  const arrowPrevEl = document.querySelector(
-    '[data-slider-arrow="projects-prev"]'
-  );
-  const arrowNextEl = document.querySelector(
-    '[data-slider-arrow="projects-next"]'
-  );
+  // ИСПРАВЛЕНО: data-nav-zone
+  const arrowPrevEl = document.querySelector('[data-nav-zone="projects-prev"]');
+  const arrowNextEl = document.querySelector('[data-nav-zone="projects-next"]');
 
   if (!sliderEl || !trackEl || !dotsEl) return;
 
@@ -423,21 +422,6 @@ function createLoopSlider({
   trackEl.addEventListener("transitionstart", onTransitionStart);
   trackEl.addEventListener("transitionend", onTransitionEnd);
 
-  // стрелки
-  if (arrowPrevEl) {
-    arrowPrevEl.addEventListener("click", (e) => {
-      e.preventDefault();
-      goPrev();
-    });
-  }
-
-  if (arrowNextEl) {
-    arrowNextEl.addEventListener("click", (e) => {
-      e.preventDefault();
-      goNext();
-    });
-  }
-
   // touch swipe
   let touchStartX = 0;
   let touchStartY = 0;
@@ -461,6 +445,7 @@ function createLoopSlider({
     const dx = touch.clientX - touchStartX;
     const dy = touch.clientY - touchStartY;
 
+    // если жест больше вертикальный — игнорим
     if (Math.abs(dy) > Math.abs(dx)) return;
 
     if (dx > swipeThreshold) {
@@ -470,8 +455,11 @@ function createLoopSlider({
     }
   };
 
-  trackEl.addEventListener("touchstart", onTouchStart, { passive: true });
-  trackEl.addEventListener("touchend", onTouchEnd, { passive: true });
+  // ИСПРАВЛЕНО:
+  // начало свайпа отслеживаем на всём слайдере,
+  // окончание — на документе (как mouseup)
+  sliderEl.addEventListener("touchstart", onTouchStart, { passive: true });
+  document.addEventListener("touchend", onTouchEnd, { passive: true });
 
   // mouse drag
   let isMouseDown = false;
@@ -553,8 +541,8 @@ function createLoopSlider({
     destroy() {
       trackEl.removeEventListener("transitionstart", onTransitionStart);
       trackEl.removeEventListener("transitionend", onTransitionEnd);
-      trackEl.removeEventListener("touchstart", onTouchStart);
-      trackEl.removeEventListener("touchend", onTouchEnd);
+      sliderEl.removeEventListener("touchstart", onTouchStart);
+      document.removeEventListener("touchend", onTouchEnd);
       trackEl.removeEventListener("mousedown", onMouseDown);
       document.removeEventListener("mouseup", onMouseUp);
       sliderEl.removeEventListener("wheel", onWheel);
