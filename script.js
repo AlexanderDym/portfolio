@@ -147,7 +147,7 @@ function renderCase(index) {
   const imageTrack = document.querySelector('[data-slider-track="images"]');
   const imageDots = document.querySelector('[data-slider-dots="images"]');
 
-  // ВАЖНО: ищем по data-nav-zone, как в HTML
+  // стрелки теперь по data-nav-zone
   const imagePrev = document.querySelector('[data-nav-zone="images-prev"]');
   const imageNext = document.querySelector('[data-nav-zone="images-next"]');
 
@@ -438,11 +438,11 @@ function createLoopSlider({
     });
   }
 
-  // === TOUCH SWIPE (фикс для мобилки) ===
+  // === TOUCH SWIPE (обновлённый для мобилки) ===
   let touchStartX = 0;
   let touchStartY = 0;
   let isTouching = false;
-  const swipeThreshold = 40;
+  const swipeThreshold = 25; // мягче, чем 40
 
   const onTouchStart = (e) => {
     if (!e.touches || !e.touches[0]) return;
@@ -461,20 +461,24 @@ function createLoopSlider({
     const dx = touch.clientX - touchStartX;
     const dy = touch.clientY - touchStartY;
 
-    // если жест больше вертикальный — игнорим
-    if (Math.abs(dy) > Math.abs(dx)) return;
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
 
-    if (dx > swipeThreshold) {
+    // игнорим только совсем слабые и почти вертикальные жесты
+    if (absDx < swipeThreshold || absDx < absDy * 0.5) {
+      return;
+    }
+
+    if (dx > 0) {
       goPrev();
-    } else if (dx < -swipeThreshold) {
+    } else {
       goNext();
     }
   };
 
-  // ВАЖНО:
-  // начало свайпа — на всём слайдере (чтобы не промахнуться мимо трека),
-  // окончание — на document, чтобы палец мог уйти за пределы карточки
+  // начало свайпа — на всём слайдере
   sliderEl.addEventListener("touchstart", onTouchStart, { passive: true });
+  // конец — на документе, чтобы палец мог уйти за пределы
   document.addEventListener("touchend", onTouchEnd, { passive: true });
 
   // mouse drag
@@ -498,9 +502,9 @@ function createLoopSlider({
 
     if (Math.abs(dy) > Math.abs(dx)) return;
 
-    if (dx > swipeThreshold) {
+    if (dx > 25) {
       goPrev();
-    } else if (dx < -swipeThreshold) {
+    } else if (dx < -25) {
       goNext();
     }
   };
