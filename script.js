@@ -147,7 +147,6 @@ function renderCase(index) {
   const imageTrack = document.querySelector('[data-slider-track="images"]');
   const imageDots = document.querySelector('[data-slider-dots="images"]');
 
-  // стрелки теперь по data-nav-zone
   const imagePrev = document.querySelector('[data-nav-zone="images-prev"]');
   const imageNext = document.querySelector('[data-nav-zone="images-next"]');
 
@@ -438,7 +437,7 @@ function createLoopSlider({
     });
   }
 
-  // === TOUCH SWIPE (обновлённый для мобилки) ===
+  // === TOUCH SWIPE (адаптировано под мобилки) ===
   let touchStartX = 0;
   let touchStartY = 0;
   let isTouching = false;
@@ -464,7 +463,7 @@ function createLoopSlider({
     const absDx = Math.abs(dx);
     const absDy = Math.abs(dy);
 
-    // игнорим только совсем слабые и почти вертикальные жесты
+    // игнорим только очень слабые и почти вертикальные жесты
     if (absDx < swipeThreshold || absDx < absDy * 0.5) {
       return;
     }
@@ -478,7 +477,7 @@ function createLoopSlider({
 
   // начало свайпа — на всём слайдере
   sliderEl.addEventListener("touchstart", onTouchStart, { passive: true });
-  // конец — на документе, чтобы палец мог уйти за пределы
+  // конец — на документе (палец может уйти за пределы карточки)
   document.addEventListener("touchend", onTouchEnd, { passive: true });
 
   // mouse drag
