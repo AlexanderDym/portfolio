@@ -437,34 +437,67 @@ function createLoopSlider({
     });
   }
 
-  // === TOUCH SWIPE (адаптировано под мобилки) ===
+  // === TOUCH SWIPE (НОРМ ДЛЯ МОБИЛОК) ===
   let touchStartX = 0;
   let touchStartY = 0;
+  let lastTouchX = 0;
+  let lastTouchY = 0;
   let isTouching = false;
-  const swipeThreshold = 25; // мягче, чем 40
+  let isHorizontalSwipe = false;
+  const swipeThreshold = 30; // немного мягче порог
 
   const onTouchStart = (e) => {
     if (!e.touches || !e.touches[0]) return;
+    const t = e.touches[0];
     isTouching = true;
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
+    isHorizontalSwipe = false;
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+    lastTouchX = t.clientX;
+    lastTouchY = t.clientY;
+  };
+
+  const onTouchMove = (e) => {
+    if (!isTouching || !e.touches || !e.touches[0]) return;
+    const t = e.touches[0];
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
+
+    // определяем направление свайпа
+    if (!isHorizontalSwipe) {
+      if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
+        // горизонтальный жест → берём управление на себя
+        isHorizontalSwipe = true;
+      } else if (Math.abs(dy) > Math.abs(dx)) {
+        // вертикальный жест → не мешаем скроллу страницы
+        isHorizontalSwipe = false;
+        return;
+      }
+    }
+
+    if (isHorizontalSwipe) {
+      // блокируем дефолтный горизонтальный скролл/перелистывание
+      e.preventDefault();
+      lastTouchX = t.clientX;
+      lastTouchY = t.clientY;
+    }
   };
 
   const onTouchEnd = (e) => {
     if (!isTouching) return;
     isTouching = false;
 
-    const touch = e.changedTouches && e.changedTouches[0];
-    if (!touch) return;
+    const t = (e.changedTouches && e.changedTouches[0]) || {
+      clientX: lastTouchX,
+      clientY: lastTouchY,
+    };
 
-    const dx = touch.clientX - touchStartX;
-    const dy = touch.clientY - touchStartY;
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
 
-    const absDx = Math.abs(dx);
-    const absDy = Math.abs(dy);
-
-    // игнорим только очень слабые и почти вертикальные жесты
-    if (absDx < swipeThreshold || absDx < absDy * 0.5) {
+    if (!isHorizontalSwipe) return;
+    if (Math.abs(dx) < swipeThreshold || Math.abs(dx) < Math.abs(dy) * 0.5) {
+      // свайп слабый или почти вертикальный — ничего не делаем
       return;
     }
 
@@ -475,10 +508,10 @@ function createLoopSlider({
     }
   };
 
-  // начало свайпа — на всём слайдере
+  // начало и движение — на всём слайдере
   sliderEl.addEventListener("touchstart", onTouchStart, { passive: true });
-  // конец — на документе (палец может уйти за пределы карточки)
-  document.addEventListener("touchend", onTouchEnd, { passive: true });
+  sliderEl.addEventListener("touchmove", onTouchMove, { passive: false });
+  sliderEl.addEventListener("touchend", onTouchEnd, { passive: true });
 
   // mouse drag
   let isMouseDown = false;
@@ -561,7 +594,8 @@ function createLoopSlider({
       trackEl.removeEventListener("transitionstart", onTransitionStart);
       trackEl.removeEventListener("transitionend", onTransitionEnd);
       sliderEl.removeEventListener("touchstart", onTouchStart);
-      document.removeEventListener("touchend", onTouchEnd);
+      sliderEl.removeEventListener("touchmove", onTouchMove);
+      sliderEl.removeEventListener("touchend", onTouchEnd);
       trackEl.removeEventListener("mousedown", onMouseDown);
       document.removeEventListener("mouseup", onMouseUp);
       sliderEl.removeEventListener("wheel", onWheel);
