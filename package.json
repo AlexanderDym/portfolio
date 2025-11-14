@@ -1,11 +1,11 @@
 {
   "name": "portfolio",
   "version": "1.0.0",
-  "private": true,
+  "description": "Alexander Dym portfolio – static site (HTML/CSS/JS)",
   "scripts": {
-    "start": "serve -s ."
+    "start": "serve -s . -l $PORT"
   },
   "dependencies": {
-    "serve": "^14.2.3"
+    "serve": "^14.2.1"
   }
 }
