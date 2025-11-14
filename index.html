@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>I-CON на Кипре · Brand Experience Design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Шрифты Inter + Rubik -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rubik:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Скрипт -->
+  <script src="script.js" defer></script>
+</head>
+<body class="page page--dark">
+  <main class="case">
+
+    <!-- =======================
+         СЛАЙДЕР ПРОЕКТОВ (верхний)
+         ======================= -->
+    <section class="case-section case-section--projects parallax-item">
+      <div class="projects-label">Проекты</div>
+
+      <div class="slider-zone">
+        <!-- Левая вертикальная зона -->
+        <div
+          class="nav-zone nav-zone--left"
+          data-nav-zone="projects-prev"
+        ></div>
+
+        <!-- сам слайдер названий проектов -->
+        <div class="slider slider--projects" data-slider="projects">
+          <div class="slider-track" data-slider-track="projects">
+            <!-- Слайды с названиями проектов рендерятся из JS -->
+          </div>
+        </div>
+
+        <!-- Правая вертикальная зона -->
+        <div
+          class="nav-zone nav-zone--right"
+          data-nav-zone="projects-next"
+        ></div>
+      </div>
+
+      <!-- точки-пагинация проектов -->
+      <div class="slider-dots" data-slider-dots="projects"></div>
+    </section>
+
+    <!-- =======================
+         ЗАГОЛОВОК / ОПИСАНИЕ КЕЙСА
+         ======================= -->
+    <header class="case-header parallax-item">
+      <h1 class="case-title" id="case-title">
+        I-CON на Кипре<br />
+        Brand Experience<br />
+        Design
+      </h1>
+
+      <p class="case-intro" id="case-intro">
+        Нужно было создать яркую, лёгкую и коллекционную визуальную айдентику,
+        которая бы ощущалась как летний бренд, а не корпоративный стенд.
+      </p>
+    </header>
+
+    <!-- =======================
+         СЛАЙДЕР КАРТИНОК
+         ======================= -->
+    <section
+      class="case-section case-section--media parallax-item"
+      aria-label="Галерея проекта"
+    >
+      <div class="media-card slider-zone">
+
+        <!-- Левая вертикальная зона -->
+        <div
+          class="nav-zone nav-zone--left"
+          data-nav-zone="images-prev"
+        ></div>
+
+        <!-- слайдер с изображениями -->
+        <div class="slider slider--images" data-slider="images">
+          <div class="slider-track" data-slider-track="images">
+            <!-- Слайды картинок рендерятся из JS -->
+          </div>
+        </div>
+
+        <!-- Правая вертикальная зона -->
+        <div
+          class="nav-zone nav-zone--right"
+          data-nav-zone="images-next"
+        ></div>
+
+        <!-- точки-пагинация картинок -->
+        <div
+          class="slider-dots"
+          data-slider-dots="images"
+          aria-label="Пагинация галереи"
+        ></div>
+      </div>
+    </section>
+
+    <!-- =======================
+         СЛАЙДЕР ТЕКСТОВ (Проблема / Решение / Результат)
+         ======================= -->
+    <section
+      class="case-section case-section--text parallax-item"
+      aria-label="Описание кейса"
+    >
+      <div class="slider-zone">
+
+        <!-- Левая вертикальная зона -->
+        <div
+          class="nav-zone nav-zone--left"
+          data-nav-zone="text-prev"
+        ></div>
+
+        <!-- слайдер текстовых карточек -->
+        <div class="text-slider" data-slider="text">
+          <div class="text-slider-track" data-slider-track="text">
+            <!-- Карточки текста рендерятся из JS -->
+          </div>
+        </div>
+
+        <!-- Правая вертикальная зона -->
+        <div
+          class="nav-zone nav-zone--right"
+          data-nav-zone="text-next"
+        ></div>
+      </div>
+
+      <!-- точки-пагинация текстов -->
+      <div
+        class="text-slider-dots"
+        data-slider-dots="text"
+        aria-label="Пагинация описания кейса"
+      ></div>
+    </section>
+
+  </main>
+</body>
+</html>
