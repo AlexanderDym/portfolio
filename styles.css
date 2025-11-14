@@ -33,7 +33,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 body {
@@ -76,7 +76,6 @@ img {
    ========================= */
 .slider-zone {
   position: relative;
-  
 }
 
 /* =========================
@@ -97,12 +96,10 @@ img {
 
 /* Базовая позиция (мобайл/планшет мы скрываем в media ниже) */
 .nav-zone--left {
-
 }
 
 .nav-zone--right {
    background: transparent !important;
-
 }
 
 .nav-zone::after {
@@ -210,6 +207,11 @@ img {
   width: 100%;
   transition: transform var(--transition);
   will-change: transform;
+}
+
+/* ВАЖНО: говорим браузеру "вертикальный скролл ок, горизонтальный — отдай JS" */
+.slider-track,
+.text-slider-track {
   touch-action: pan-y;
 }
 

@@ -146,7 +146,8 @@ function renderCase(index) {
   const imageSliderEl = document.querySelector('[data-slider="images"]');
   const imageTrack = document.querySelector('[data-slider-track="images"]');
   const imageDots = document.querySelector('[data-slider-dots="images"]');
-  // ИСПРАВЛЕНО: берём по data-nav-zone, как в HTML
+
+  // ВАЖНО: ищем по data-nav-zone, как в HTML
   const imagePrev = document.querySelector('[data-nav-zone="images-prev"]');
   const imageNext = document.querySelector('[data-nav-zone="images-next"]');
 
@@ -186,7 +187,7 @@ function renderCase(index) {
   const textSliderEl = document.querySelector('[data-slider="text"]');
   const textTrack = document.querySelector('[data-slider-track="text"]');
   const textDots = document.querySelector('[data-slider-dots="text"]');
-  // ИСПРАВЛЕНО: data-nav-zone
+
   const textPrev = document.querySelector('[data-nav-zone="text-prev"]');
   const textNext = document.querySelector('[data-nav-zone="text-next"]');
 
@@ -254,7 +255,7 @@ function initProjectsSlider() {
   const sliderEl = document.querySelector('[data-slider="projects"]');
   const trackEl = document.querySelector('[data-slider-track="projects"]');
   const dotsEl = document.querySelector('[data-slider-dots="projects"]');
-  // ИСПРАВЛЕНО: data-nav-zone
+
   const arrowPrevEl = document.querySelector('[data-nav-zone="projects-prev"]');
   const arrowNextEl = document.querySelector('[data-nav-zone="projects-next"]');
 
@@ -422,7 +423,22 @@ function createLoopSlider({
   trackEl.addEventListener("transitionstart", onTransitionStart);
   trackEl.addEventListener("transitionend", onTransitionEnd);
 
-  // touch swipe
+  // стрелки
+  if (arrowPrevEl) {
+    arrowPrevEl.addEventListener("click", (e) => {
+      e.preventDefault();
+      goPrev();
+    });
+  }
+
+  if (arrowNextEl) {
+    arrowNextEl.addEventListener("click", (e) => {
+      e.preventDefault();
+      goNext();
+    });
+  }
+
+  // === TOUCH SWIPE (фикс для мобилки) ===
   let touchStartX = 0;
   let touchStartY = 0;
   let isTouching = false;
@@ -455,9 +471,9 @@ function createLoopSlider({
     }
   };
 
-  // ИСПРАВЛЕНО:
-  // начало свайпа отслеживаем на всём слайдере,
-  // окончание — на документе (как mouseup)
+  // ВАЖНО:
+  // начало свайпа — на всём слайдере (чтобы не промахнуться мимо трека),
+  // окончание — на document, чтобы палец мог уйти за пределы карточки
   sliderEl.addEventListener("touchstart", onTouchStart, { passive: true });
   document.addEventListener("touchend", onTouchEnd, { passive: true });
 
