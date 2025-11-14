@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Alexander Dym portfolio – static site (HTML/CSS/JS)",
   "scripts": {
-    "start": "http-server -p $PORT ."
+    "start": "http-server -p ${PORT:-8080} ."
   },
   "dependencies": {
     "http-server": "^14.1.1"
