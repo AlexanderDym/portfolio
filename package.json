@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "Alexander Dym portfolio – static site (HTML/CSS/JS)",
   "scripts": {
-    "start": "npx http-server ./dist"
+    "start": "http-server -p $PORT ."
   },
   "dependencies": {
-    "serve": "^14.2.1"
+    "http-server": "^14.1.1"
   }
-  
 }
