@@ -11,6 +11,7 @@ const CASES = [
       bg: "#000000",
       accent: "#2f80ff",
     },
+    // здесь могут быть и строки (картинки), и объекты типа { type: "video", src, poster? }
     images: [
       "images/Image_here.png",
       "images/Image_here-1.png",
@@ -22,6 +23,7 @@ const CASES = [
       "images/Image_here-7.png",
       "images/Image_here-8.png",
       "images/Image_here-9.png",
+      // пример, как добавить видео:
     ],
     textBlocks: [
       {
@@ -62,6 +64,53 @@ const CASES = [
       "images/second-1.png",
       "images/second-2.png",
       "images/second-3.png",
+      // пример видео:
+      // {
+      //   type: "video",
+      //   src: "media/second-case.mp4",
+      //   poster: "images/second-2.png"
+      // },
+    ],
+    textBlocks: [
+      {
+        title: "Проблема",
+        paragraphs: [
+          "Перед брендом стояла задача выделиться в перенасыщенной нише и сделать продукт заметным и желанным.",
+          "Нужно было создать визуальную историю, которая передаёт ощущение премиального, но доступного сервиса.",
+        ],
+      },
+      {
+        title: "Решение",
+        paragraphs: [
+          "Мы собрали визуальную систему вокруг контрастных акцентов, динамики и понятных UI-паттернов.",
+          "Каждый экран и визуал работали как отдельный постер, но при этом собирались в единую историю бренда.",
+        ],
+      },
+      {
+        title: "Результат",
+        paragraphs: [
+          "Кампании с новым визуалом показали более высокий CTR и вовлечённость.",
+          "Заказчик продолжил развивать линейку материалов именно в этом стиле.",
+        ],
+      },
+    ],
+  },
+
+  {
+    id: "second-project",
+    shortTitle: "Second Project",
+    title: "Второй кейс<br>Creative Direction & Design",
+    intro:
+      "Заглушка для второго проекта. Здесь будет описание другого кейса: например, Tesla для такси, AI Dating или UCLIQ.",
+    theme: {
+      bg: "#020712",
+      accent: "#ff8a00",
+    },
+    images: [
+      {
+        type: "video",
+        src: "images/Fantacy_DC_pt3.mp4",
+      },
     ],
     textBlocks: [
       {
@@ -142,7 +191,7 @@ function renderCase(index) {
   if (titleEl) titleEl.innerHTML = data.title;
   if (introEl) introEl.textContent = data.intro;
 
-  // ===== СЛАЙДЕР КАРТИНОК =====
+  // ===== СЛАЙДЕР КАРТИНОК / ВИДЕО =====
   const imageSliderEl = document.querySelector('[data-slider="images"]');
   const imageTrack = document.querySelector('[data-slider-track="images"]');
   const imageDots = document.querySelector('[data-slider-dots="images"]');
@@ -158,7 +207,10 @@ function renderCase(index) {
     imageTrack.innerHTML = "";
     imageDots.innerHTML = "";
 
-    const items = data.images.map((src) => ({ src }));
+    // нормализуем список: строка → { type: "image", src }, объект оставляем как есть
+    const items = data.images.map((media) =>
+      typeof media === "string" ? { type: "image", src: media } : media
+    );
 
     imageSliderInstance = createLoopSlider({
       sliderEl: imageSliderEl,
@@ -168,9 +220,31 @@ function renderCase(index) {
       buildSlide: (item) => {
         const slide = document.createElement("article");
         slide.className = "slider-slide slider-slide--image";
+
+        // ВИДЕО
+        if (item.type === "video") {
+          const video = document.createElement("video");
+          video.src = item.src;
+          video.controls = true;
+          video.playsInline = true;
+          video.preload = "metadata";
+          video.className = "case-media case-media--video";
+          slide.classList.add("slider-slide--video");
+
+          if (item.poster) {
+            video.poster = item.poster;
+          }
+
+          slide.appendChild(video);
+          return slide;
+        }
+
+        // КАРТИНКА
         const img = document.createElement("img");
         img.src = item.src;
         img.alt = "";
+        img.className = "case-media case-media--image";
+
         slide.appendChild(img);
         return slide;
       },
@@ -296,8 +370,17 @@ function initProjectsSlider() {
 
 function updateProjectPillsActiveState() {
   const pills = document.querySelectorAll(".project-pill");
+
   pills.forEach((pill, idx) => {
-    pill.classList.toggle("project-pill--active", idx === currentCaseIndex);
+    if (idx === currentCaseIndex) {
+      // перезапускаем анимацию
+      pill.classList.remove("project-pill--active");
+      // форсим перерисовку
+      void pill.offsetWidth;
+      pill.classList.add("project-pill--active");
+    } else {
+      pill.classList.remove("project-pill--active");
+    }
   });
 }
 
@@ -359,7 +442,7 @@ function createLoopSlider({
 
   function setTransition(enable) {
     trackEl.style.transition = enable
-      ? "transform 0.6s cubic-bezier(.34,0.96,.64,1)"
+      ? "transform 0.6s cubic-bezier(.34,0.6,.64,1)"
       : "none";
   }
 
@@ -450,6 +533,13 @@ function createLoopSlider({
 
   const onTouchStart = (e) => {
     if (!e.touches || !e.touches[0]) return;
+
+    // 👉 если жест начинается на видео — не включаем свайп слайдера
+    const target = e.target;
+    if (target && target.closest && target.closest(".case-media--video")) {
+      return;
+    }
+
     const t = e.touches[0];
     isTouching = true;
     isHorizontalSwipe = false;
@@ -522,6 +612,13 @@ function createLoopSlider({
 
   const onMouseDown = (e) => {
     if (e.button !== 0) return;
+
+    // 👉 если клик/drag начинается на видео — не включаем drag-свайп слайдера
+    const target = e.target;
+    if (target && target.closest && target.closest(".case-media--video")) {
+      return;
+    }
+
     isMouseDown = true;
     mouseStartX = e.clientX;
     mouseStartY = e.clientY;
