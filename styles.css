@@ -58,7 +58,23 @@ img {
   margin: 0 auto;
   padding: 40px 20px 64px;
   position: relative;
+
+  /* эффект плавного появления */
+  opacity: 0;
+  transform: translateY(16px);
+  filter: blur(4px);
+  transition: opacity 0.45s ease-out,
+              transform 0.45s ease-out,
+              filter 0.45s ease-out;
 }
+
+.case--visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+
 
 /* =========================
    PROJECTS HEADER
@@ -237,6 +253,7 @@ img {
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 11px
 }
 /* =========================
    DOTS (общий стиль)

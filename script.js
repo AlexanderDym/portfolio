@@ -11,7 +11,6 @@ const CASES = [
       bg: "#000000",
       accent: "#2f80ff",
     },
-    // здесь могут быть и строки (картинки), и объекты типа { type: "video", src, poster? }
     images: [
       "images/Image_here.png",
       "images/Image_here-1.png",
@@ -23,7 +22,6 @@ const CASES = [
       "images/Image_here-7.png",
       "images/Image_here-8.png",
       "images/Image_here-9.png",
-      // пример, как добавить видео:
     ],
     textBlocks: [
       {
@@ -64,12 +62,8 @@ const CASES = [
       "images/second-1.png",
       "images/second-2.png",
       "images/second-3.png",
-      // пример видео:
-      // {
-      //   type: "video",
-      //   src: "media/second-case.mp4",
-      //   poster: "images/second-2.png"
-      // },
+      // сюда при желании можно добавить видео:
+      // { type: "video", src: "media/second-case.mp4", poster: "images/second-2.png" },
     ],
     textBlocks: [
       {
@@ -97,11 +91,11 @@ const CASES = [
   },
 
   {
-    id: "second-project",
-    shortTitle: "Second Project",
-    title: "Второй кейс<br>Creative Direction & Design",
+    id: "third-project",
+    shortTitle: "Video Case",
+    title: "Видео-кейс<br>Showreel",
     intro:
-      "Заглушка для второго проекта. Здесь будет описание другого кейса: например, Tesla для такси, AI Dating или UCLIQ.",
+      "Кейс, в котором главное — видео. Вертикальный формат 9:16, как в Instagram Reels.",
     theme: {
       bg: "#020712",
       accent: "#ff8a00",
@@ -110,28 +104,26 @@ const CASES = [
       {
         type: "video",
         src: "images/Fantacy_DC_pt3.mp4",
+        // poster: "images/some-poster.png", // можешь добавить обложку
       },
     ],
     textBlocks: [
       {
-        title: "Проблема",
+        title: "Задача",
         paragraphs: [
-          "Перед брендом стояла задача выделиться в перенасыщенной нише и сделать продукт заметным и желанным.",
-          "Нужно было создать визуальную историю, которая передаёт ощущение премиального, но доступного сервиса.",
+          "Нужно было показать динамику и настроение бренда через короткий вертикальный ролик.",
         ],
       },
       {
-        title: "Решение",
+        title: "Подход",
         paragraphs: [
-          "Мы собрали визуальную систему вокруг контрастных акцентов, динамики и понятных UI-паттернов.",
-          "Каждый экран и визуал работали как отдельный постер, но при этом собирались в единую историю бренда.",
+          "Мы собрали showreel в формате 9:16, который хорошо смотрится на мобильных устройствах и в соцсетях.",
         ],
       },
       {
         title: "Результат",
         paragraphs: [
-          "Кампании с новым визуалом показали более высокий CTR и вовлечённость.",
-          "Заказчик продолжил развивать линейку материалов именно в этом стиле.",
+          "Видео использовалось в презентациях, на лендингах и в таргетированной рекламе.",
         ],
       },
     ],
@@ -155,6 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initProjectsSlider();
   renderCase(currentCaseIndex);
+  triggerCaseFade();
 
   // стрелки на клавиатуре
   document.addEventListener("keydown", (e) => {
@@ -168,6 +161,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+// маленький хелпер: плавное появление кейса
+function triggerCaseFade() {
+  const caseEl = document.querySelector(".case");
+  if (!caseEl) return;
+
+  // сбрасываем состояние
+  caseEl.classList.remove("case--visible");
+  // форсим перерисовку, чтобы анимация заново проигрывалась
+  void caseEl.offsetWidth;
+  // включаем видимое состояние
+  caseEl.classList.add("case--visible");
+}
 
 // ========= РЕНДЕР КЕЙСА =========
 
@@ -207,7 +213,7 @@ function renderCase(index) {
     imageTrack.innerHTML = "";
     imageDots.innerHTML = "";
 
-    // нормализуем список: строка → { type: "image", src }, объект оставляем как есть
+    // нормализуем список: строка → { type: "image", src }
     const items = data.images.map((media) =>
       typeof media === "string" ? { type: "image", src: media } : media
     );
@@ -318,8 +324,9 @@ function renderCase(index) {
     });
   }
 
-  // обновляем выделение названия проекта
+  // обновляем выделение названия проекта (с перезапуском анимации)
   updateProjectPillsActiveState();
+  triggerCaseFade();
 }
 
 // ========= ПРОЕКТНЫЙ СЛАЙДЕР (ВЕРХНИЙ) =========
@@ -373,10 +380,9 @@ function updateProjectPillsActiveState() {
 
   pills.forEach((pill, idx) => {
     if (idx === currentCaseIndex) {
-      // перезапускаем анимацию
+      // снимаем класс, форсим перерисовку и снова добавляем
       pill.classList.remove("project-pill--active");
-      // форсим перерисовку
-      void pill.offsetWidth;
+      void pill.offsetWidth; // сброс transition
       pill.classList.add("project-pill--active");
     } else {
       pill.classList.remove("project-pill--active");
@@ -457,6 +463,12 @@ function createLoopSlider({
     return currentIndex - 1;
   }
 
+  function isCurrentSlideVideo() {
+    const realIndex = getRealIndex();
+    const slide = realSlides[realIndex];
+    return slide && slide.classList.contains("slider-slide--video");
+  }
+
   function updateDots() {
     const realIndex = getRealIndex();
     dots.forEach((dot, idx) => {
@@ -529,16 +541,13 @@ function createLoopSlider({
   let lastTouchY = 0;
   let isTouching = false;
   let isHorizontalSwipe = false;
-  const swipeThreshold = 30; // немного мягче порог
+  const swipeThreshold = 30;
 
   const onTouchStart = (e) => {
     if (!e.touches || !e.touches[0]) return;
 
-    // 👉 если жест начинается на видео — не включаем свайп слайдера
-    const target = e.target;
-    if (target && target.closest && target.closest(".case-media--video")) {
-      return;
-    }
+    // если текущий слайд — видео, свайп отключаем
+    if (isCurrentSlideVideo()) return;
 
     const t = e.touches[0];
     isTouching = true;
@@ -555,20 +564,16 @@ function createLoopSlider({
     const dx = t.clientX - touchStartX;
     const dy = t.clientY - touchStartY;
 
-    // определяем направление свайпа
     if (!isHorizontalSwipe) {
       if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
-        // горизонтальный жест → берём управление на себя
         isHorizontalSwipe = true;
       } else if (Math.abs(dy) > Math.abs(dx)) {
-        // вертикальный жест → не мешаем скроллу страницы
         isHorizontalSwipe = false;
         return;
       }
     }
 
     if (isHorizontalSwipe) {
-      // блокируем дефолтный горизонтальный скролл/перелистывание
       e.preventDefault();
       lastTouchX = t.clientX;
       lastTouchY = t.clientY;
@@ -589,7 +594,6 @@ function createLoopSlider({
 
     if (!isHorizontalSwipe) return;
     if (Math.abs(dx) < swipeThreshold || Math.abs(dx) < Math.abs(dy) * 0.5) {
-      // свайп слабый или почти вертикальный — ничего не делаем
       return;
     }
 
@@ -600,7 +604,6 @@ function createLoopSlider({
     }
   };
 
-  // начало и движение — на всём слайдере
   sliderEl.addEventListener("touchstart", onTouchStart, { passive: true });
   sliderEl.addEventListener("touchmove", onTouchMove, { passive: false });
   sliderEl.addEventListener("touchend", onTouchEnd, { passive: true });
@@ -613,11 +616,8 @@ function createLoopSlider({
   const onMouseDown = (e) => {
     if (e.button !== 0) return;
 
-    // 👉 если клик/drag начинается на видео — не включаем drag-свайп слайдера
-    const target = e.target;
-    if (target && target.closest && target.closest(".case-media--video")) {
-      return;
-    }
+    // если текущий слайд — видео, drag отключаем
+    if (isCurrentSlideVideo()) return;
 
     isMouseDown = true;
     mouseStartX = e.clientX;
@@ -649,6 +649,9 @@ function createLoopSlider({
   const wheelLockTime = 250;
 
   const onWheel = (e) => {
+    // если сейчас видео — не листаем тачпадом
+    if (isCurrentSlideVideo()) return;
+
     if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) return;
     const dx = e.deltaX;
     if (Math.abs(dx) < wheelThreshold) return;
