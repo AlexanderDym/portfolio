@@ -211,7 +211,7 @@ img {
    IMAGE SLIDER
    ========================= */
 .media-card {
-  background-color: var(--bg-card-soft);
+  background-color: transparent
   border-radius: 0px; 
   padding: 8px;
 }
