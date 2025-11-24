@@ -12,16 +12,16 @@ const CASES = [
       accent: "#2f80ff",
     },
     images: [
-      "images/Image_here.png",
-      "images/Image_here-1.png",
-      "images/Image_here-2.png",
-      "images/Image_here-3.png",
-      "images/Image_here-4.png",
-      "images/Image_here-5.png",
-      "images/Image_here-6.png",
-      "images/Image_here-7.png",
-      "images/Image_here-8.png",
-      "images/Image_here-9.png",
+      "images/case_1/Image_here.webp",
+      "images/case_1/Image_here-1.webp",
+      "images/case_1/Image_here-2.webp",
+      "images/case_1/Image_here-3.webp",
+      "images/case_1/Image_here-4.webp",
+      "images/case_1/Image_here-5.webp",
+      "images/case_1/Image_here-6.webp",
+      "images/case_1/Image_here-7.webp",
+      "images/case_1/Image_here-8.webp",
+      "images/case_1/Image_here-9.webp",
     ],
     textBlocks: [
       {
@@ -82,14 +82,14 @@ const CASES = [
     intro:
       "Заглушка для второго проекта. Здесь будет описание другого кейса: например, Tesla для такси, AI Dating или UCLIQ.",
     theme: {
-      bg: "#020712",
+      bg: "#000000",
       accent: "#ff8a00",
     },
     images: [
-      "images/second-1.png",
-      "images/second-2.png",
-      "images/second-3.png",
-      "images/second-4.png",
+      "images/case_2/second-1.webp",
+      "images/case_2/second-2.webp",
+      "images/case_2/second-3.webp",
+      "images/case_2/second-4.webp",
       // сюда при желании можно добавить видео:
       // { type: "video", src: "media/second-case.mp4", poster: "images/second-2.png" },
     ],
@@ -154,19 +154,19 @@ const CASES = [
     intro:
       "Заглушка для второго проекта. Здесь будет описание другого кейса: например, Tesla для такси, AI Dating или UCLIQ.",
     theme: {
-      bg: "#020712",
+      bg: "#000000",
       accent: "#ff8a00",
     },
     images: [
-      "images/prague_merch-1.png",
-      "images/prague_merch-2.png",
-      "images/prague_merch-3.png",
-      "images/prague_merch-4.png",
-      "images/prague_merch-5.png",
-      "images/prague_merch-6.png",
-      "images/prague_merch-7.png",
-      "images/prague_merch-8.png",
-      "images/prague_merch-9.png",
+      "images/case_3/prague_merch-1.webp",
+      "images/case_3/prague_merch-2.webp",
+      "images/case_3/prague_merch-3.webp",
+      "images/case_3/prague_merch-4.webp",
+      "images/case_3/prague_merch-5.webp",
+      "images/case_3/prague_merch-6.webp",
+      "images/case_3/prague_merch-7.webp",
+      "images/case_3/prague_merch-8.webp",
+      "images/case_3/prague_merch-9.webp",
       // сюда при желании можно добавить видео:
       // { type: "video", src: "media/second-case.mp4", poster: "images/second-2.png" },
     ],
@@ -231,14 +231,13 @@ const CASES = [
     intro:
       "Заглушка для второго проекта. Здесь будет описание другого кейса: например, Tesla для такси, AI Dating или UCLIQ.",
     theme: {
-      bg: "#020712",
+      bg: "#000000",
       accent: "#ff8a00",
     },
     images: [
-      "images/fourth-1.png",
-      "images/fourth-2.png",
-      "images/fourth-3.png",
-      "images/fourth-4.png",
+      "images/case_4/fourth-3.webp",
+      "images/case_4/fourth-2.png",
+      "images/case_4/fourth-1.png",
 
       // сюда при желании можно добавить видео:
       // { type: "video", src: "media/second-case.mp4", poster: "images/second-2.png" },
@@ -304,7 +303,7 @@ const CASES = [
     intro:
       "Кейс, в котором главное — видео. Вертикальный формат 9:16, как в Instagram Reels.",
     theme: {
-      bg: "#020712",
+      bg: "#000000",
       accent: "#ff8a00",
     },
     images: [
@@ -335,6 +334,35 @@ const CASES = [
       },
     ],
   },
+
+  {
+    id: "about-me",
+    shortTitle: "Обо мне",
+    title: "Обо мне<br>Creative Direction & Design",
+    intro:
+      "Немного о моём пути, подходе к дизайну и проектах, которые мне близки.",
+    theme: {
+      bg: "#000000",
+      accent: "#00c2ff",
+    },
+    images: ["images/third-1.png", "images/about_me/photo2.webp"],
+    textBlocks: [
+      {
+        title: "О себе",
+        paragraphs: [
+          "Меня зовут [Твоё имя], я занимаюсь дизайном, бренд-опытом и креативным продакшеном.",
+          "Мне важно не просто сделать красиво — я создаю запоминающиеся смыслы и вовлекающий пользовательский опыт.",
+        ],
+      },
+      {
+        title: "Мои ценности",
+        paragraphs: [
+          "Индивидуальность, эффектность, осмысленный подход. Я работаю так, чтобы каждый проект был уникальным и цепляющим.",
+          "Для меня важно, чтобы визуал говорил сам за себя, вовлекал и выделял.",
+        ],
+      },
+    ],
+  },
 ];
 
 // ========= ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =========
@@ -352,11 +380,41 @@ let activeSlider = null; // для управления стрелками кл�
 document.addEventListener("DOMContentLoaded", () => {
   initParallax();
 
-  initProjectsSlider();
-  renderCase(currentCaseIndex);
+  const modal = document.querySelector(".intro-modal");
+  const sureBtn = document.querySelector(".intro-button");
+
+  if (modal && sureBtn) {
+    const hasSeenModal = sessionStorage.getItem("hasSeenModal");
+
+    if (!hasSeenModal) {
+      modal.classList.add("modal--visible");
+
+      sureBtn.addEventListener("click", () => {
+        modal.classList.remove("modal--visible");
+        modal.classList.add("modal--hidden");
+
+        setTimeout(() => {
+          modal.style.display = "none";
+        }, 400);
+
+        sessionStorage.setItem("hasSeenModal", "true");
+      });
+    } else {
+      modal.style.display = "none";
+    }
+  }
+
+  const caseId = document.body.dataset.caseId;
+  const indexToRender = CASES.findIndex((c) => c.id === caseId);
+  renderCase(indexToRender >= 0 ? indexToRender : currentCaseIndex);
+
+  // запускаем projectSlider только если это главная
+  if (!caseId || caseId === "icon-cyprus") {
+    initProjectsSlider();
+  }
+
   triggerCaseFade();
 
-  // стрелки на клавиатуре
   document.addEventListener("keydown", (e) => {
     if (!activeSlider) return;
     if (e.key === "ArrowLeft") {
@@ -823,7 +881,10 @@ function createLoopSlider({
   const onMouseDown = (e) => {
     if (e.button !== 0) return;
 
-    // если текущий слайд — видео, drag отключаем
+    // Отключаем drag при клике на видео (любой вложенный элемент внутри тега <video>)
+    if (e.target.closest("video")) return;
+
+    // если текущий слайд — видео, отключаем drag вообще
     if (isCurrentSlideVideo()) return;
 
     isMouseDown = true;

@@ -80,10 +80,10 @@ img {
    PROJECTS HEADER
    ========================= */
 .projects-label {
-  text-align: center;
+  text-align: left;
   color: var(--text-muted);
   margin-bottom: 32px;
-  font-size: 18px;
+  font-size: 22px;
   opacity: 0.6;
 }
 
@@ -423,7 +423,7 @@ img {
 @media (min-width: 1024px) {
   .case {
     max-width: 720px;
-    padding: 64px 32px 96px;
+    padding: 94px 32px 96px;
   }
   .case-title {
     font-size: 40px;
@@ -436,5 +436,219 @@ img {
   }
   .case-title {
     font-size: 42px;
+  }
+}
+
+/* =========================
+   HEADER LOGO + BURGER
+   ========================= */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 46px;
+  position: sticky;
+  top: 0;
+  background-color: var(--bg-main);
+  z-index: 100;
+  max-width: 720px;
+  margin: 0 auto;
+ 
+}
+
+.site-logo {
+  height: 88px;
+  width: auto;
+  transition: color 0.3s ease, transform 0.3s ease;
+  
+  
+  
+}
+
+
+.site-logo:hover {
+  
+  transform: translateX(14px); /* лёгкое смещение при наведении */
+}
+
+.site-nav {
+  display: flex;
+  gap: 24px;
+  max-width: 720px;
+}
+
+.site-nav a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.3s;
+  
+}
+
+.site-nav a:hover {
+  opacity: 0.6;
+}
+
+.site-nav a:visited {
+  color: white;
+}
+
+
+
+
+/* =========================
+   FOOTER CAR IMAGE
+   ========================= */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 4rem 2rem;
+  max-width: 720px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: white;
+}
+
+.footer-email {
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.footer-location {
+  font-weight: 400;
+}
+
+.footer-socials a {
+  color: white;
+  text-decoration: none;
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-socials a:hover {
+  color: #ababab; /* розовый или любой другой цвет */
+  transform: translateX(4px); /* лёгкое смещение при наведении */
+}
+
+
+.footer-car img {
+  max-width: 300px;
+  height: auto;
+  transition: color 0.1s ease, transform 0.8s ease;
+  transform: translateX(14px);
+}
+
+.footer-car img:hover {
+  max-width: 300px;
+  height: auto;
+  transition: color 0.1s ease, transform 0.8s ease;
+  transform: translateX(44px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-car {
+    align-self: center;
+  }
+}
+
+
+
+.intro-modal {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.9);
+  transition: background 0.5s ease;
+}
+
+  
+
+
+.intro-modal-content {
+  background: #1b1b1b;
+  color: white;
+  padding: 2rem;
+  border-radius: 1.25rem;
+  max-width: 90vw;
+  width: 560px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+
+.intro-modal-text p {
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.intro-greeting {
+  font-size: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.intro-name {
+  font-size: 2.4rem;
+  line-height: 1.2;
+}
+
+.intro-name strong {
+  font-weight: 500;
+}
+
+.intro-role {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  padding-bottom: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.intro-contact {
+  font-size: 0.85rem;
+  color: #aaa;
+  
+}
+
+.intro-button {
+  background: white;
+  color: black;
+  font-size: 1.2rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
