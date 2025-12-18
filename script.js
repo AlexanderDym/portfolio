@@ -1286,6 +1286,7 @@ function extractProjectType(title = "") {
   if (t.includes("design")) return "Design";
   return "Creative Project";
 }
+
 // открытие кейса
 function openCase(caseId) {
   sessionStorage.setItem("activeCaseId", caseId);
