@@ -1303,7 +1303,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btnWorks) {
     btnWorks.addEventListener("click", () => {
-      window.location.href = "works.html";
+      window.location.href = "index.html";
     });
   }
 
