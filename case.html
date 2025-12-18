@@ -2,35 +2,49 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8"/>
-  <title>About · Alexander</title>
+  <title>Case · Alexander</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rubik:wght@400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="styles.css"/>
+  <link href="styles.css" rel="stylesheet"/>
   <script defer src="script.js"></script>
 </head>
 
-<body class="page page--dark page--about">
-
+<body class="page page--dark">
   <header class="site-header">
-    <a href="index.html" class="site-logo-link">
+     <a href="index.html" class="site-logo-link">
   <img src="/images/logo/logo.svg" alt="jpeg.turbo" class="site-logo" />
 </a>
 
     <nav class="site-nav">
       <a href="index.html">Works</a>
-      <a href="about.html" class="is-active">About me</a>
+      <a href="about.html">About me</a>
     </nav>
   </header>
 
-  <main class="case">
-    <!-- ✅ НЕТ блока Projects -->
+  <main class="case case--visible">
+
+    <section class="case-section case-section--projects parallax-item">
+      <div class="projects-label">Проекты</div>
+
+      <div class="slider-zone">
+        <div class="nav-zone nav-zone--left" data-nav-zone="projects-prev"></div>
+
+        <div class="slider slider--projects" data-slider="projects">
+          <div class="slider-track" data-slider-track="projects"></div>
+        </div>
+
+        <div class="nav-zone nav-zone--right" data-nav-zone="projects-next"></div>
+      </div>
+
+      <div class="slider-dots" data-slider-dots="projects"></div>
+    </section>
 
     <header class="case-header parallax-item">
       <h1 class="case-title" id="case-title"></h1>
       <p class="case-intro" id="case-intro"></p>
     </header>
 
-    <section class="case-section case-section--media parallax-item" aria-label="About gallery">
+    <section class="case-section case-section--media parallax-item" aria-label="Галерея проекта">
       <div class="media-card slider-zone">
         <div class="nav-zone nav-zone--left" data-nav-zone="images-prev"></div>
 
@@ -39,11 +53,12 @@
         </div>
 
         <div class="nav-zone nav-zone--right" data-nav-zone="images-next"></div>
-        <div class="slider-dots" data-slider-dots="images" aria-label="Gallery pagination"></div>
+
+        <div class="slider-dots" data-slider-dots="images" aria-label="Пагинация галереи"></div>
       </div>
     </section>
 
-    <section class="case-section case-section--text parallax-item" aria-label="About text">
+    <section class="case-section case-section--text parallax-item" aria-label="Описание кейса">
       <div class="slider-zone">
         <div class="nav-zone nav-zone--left" data-nav-zone="text-prev"></div>
 
@@ -54,7 +69,7 @@
         <div class="nav-zone nav-zone--right" data-nav-zone="text-next"></div>
       </div>
 
-      <div class="text-slider-dots" data-slider-dots="text" aria-label="Text pagination"></div>
+      <div class="text-slider-dots" data-slider-dots="text" aria-label="Пагинация описания кейса"></div>
     </section>
   </main>
 
@@ -62,7 +77,7 @@
     <div class="footer-left">
       <div class="footer-contacts">
         <p class="footer-email">jpeg.turbo@gmail.com</p>
-        <p class="footer-location">Permanently located in<br>Lisbon, Portugal 🌴</p>
+        <p class="footer-location">Permanently located in<br>Lisbon, Portugal</p>
       </div>
       <div class="footer-socials">
         <p><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></p>
@@ -70,12 +85,12 @@
         <p><a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
       </div>
     </div>
+
     <div class="footer-car">
-      <a href="about.html" class="site-logo-link">
-      <img src="/images/logo/car.gif" alt="jpeg.turbo" class="site-logo" />
-      </a>
+        <a href="about.html" class="site-logo-link">
+        <img src="/images/logo/car.gif" alt="jpeg.turbo" class="site-logo" />
+        </a>
     </div>
   </footer>
-
 </body>
 </html>

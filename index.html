@@ -1,136 +1,75 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
-<meta charset="utf-8"/>
-<title>I-CON на Кипре · Brand Experience Design</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<!-- Шрифты Inter + Rubik -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Rubik:wght@400;500&amp;display=swap" rel="stylesheet"/>
-<!-- Стили -->
-<link href="styles.css" rel="stylesheet"/>
-<!-- Скрипт -->
-<script defer="" src="script.js"></script>
+  <meta charset="UTF-8" />
+  <title>Works · Alexander — Creative Director</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
 </head>
-<body class="page page--dark">
+
+<body class="page page--dark page--works">
+
+  <!-- INTRO MODAL (показываем только при первом заходе в сессию) -->
   <div class="intro-modal" id="introModal">
-  <div class="intro-modal-content">
-    <div class="intro-modal-text">
-      <p class="intro-greeting">Hey there!</p>
-      <p class="intro-name">My name is<br><strong>Alexander</strong></p>
-      <p class="intro-role">A Creative Director</p>
-      <div class="intro-contact">
-        <p class="intro-email">You are welcome to see my projects</p>
-        <p class="intro-location">jpeg.turbo<br>Lisbon, Portugal</p>
+    <div class="intro-modal-content">
+      <div class="intro-modal-text">
+        <p class="intro-greeting">Hello 👋</p>
+        <p class="intro-name">I’m <strong>Alexander</strong></p>
+        <p class="intro-role">Creative Director & Designer</p>
+        <p class="intro-contact">Brand • Product • Digital • Experience</p>
+      </div>
+
+      <div class="intro-actions">
+        <button class="intro-button" id="introWorks">View works</button>
+        <button class="intro-button intro-button--secondary" id="introAbout">About me</button>
       </div>
     </div>
-    <button class="intro-button" id="introButton">Sure</button>
   </div>
-</div>
 
   <header class="site-header">
-  <img alt="jpeg.turbo" class="site-logo" src="/images/logo/logo.svg"/>
-  
-  <nav class="site-nav">
-    <a href="index.html">Main</a>
-    <a href="about.html">About me</a>
-  </nav>
-</header>
+    <a href="index.html" class="site-logo-link">
+  <img src="/images/logo/logo.svg" alt="jpeg.turbo" class="site-logo" />
+</a>
+
+    <nav class="site-nav">
+      <a href="index.html" class="is-active">Works</a>
+      <a href="about.html">About me</a>
+    </nav>
+  </header>
+
+  <main class="case works case--visible">
+    <header class="works-header">
+      <h1 class="works-title">Selected Works</h1>
+      <p class="works-intro">A selection of brand, digital, and experiential projects.</p>
+    </header>
+
+    <section class="works-grid" id="worksGrid"></section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-left">
+      <div class="footer-contacts">
+        <p class="footer-email">jpeg.turbo@gmail.com</p>
+        <p class="footer-location">Permanently located in<br />Lisbon, Portugal 🌴</p>
+      </div>
+
+      <div class="footer-socials">
+        <p><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+        <p><a href="https://t.me/yourusername" target="_blank" rel="noopener noreferrer">Telegram</a></p>
+        <p><a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
+      </div>
+    </div>
+
+    <div class="footer-car">
+       <a href="about.html" class="site-logo-link">
+  <img src="/images/logo/car.gif" alt="jpeg.turbo" class="site-logo" />
+</a>
+
+    </div>
+  </footer>
 
 </body>
-
-
-
-
-<main class="case">
-<!-- =======================
-         СЛАЙДЕР ПРОЕКТОВ (верхний)
-         ======================= -->
-<section class="case-section case-section--projects parallax-item">
-<div class="projects-label">Проекты</div>
-<div class="slider-zone">
-<!-- Левая вертикальная зона -->
-<div class="nav-zone nav-zone--left" data-nav-zone="projects-prev"></div>
-<!-- сам слайдер названий проектов -->
-<div class="slider slider--projects" data-slider="projects">
-<div class="slider-track" data-slider-track="projects">
-<!-- Слайды с названиями проектов рендерятся из JS -->
-</div>
-</div>
-<!-- Правая вертикальная зона -->
-<div class="nav-zone nav-zone--right" data-nav-zone="projects-next"></div>
-</div>
-<!-- точки-пагинация проектов -->
-<div class="slider-dots" data-slider-dots="projects"></div>
-</section>
-<!-- =======================
-         ЗАГОЛОВОК / ОПИСАНИЕ КЕЙСА
-         ======================= -->
-<header class="case-header parallax-item">
-<h1 class="case-title" id="case-title">
-        I-CON на Кипре<br/>
-        Brand Experience<br/>
-        Design
-      </h1>
-<p class="case-intro" id="case-intro">
-        Нужно было создать яркую, лёгкую и коллекционную визуальную айдентику,
-        которая бы ощущалась как летний бренд, а не корпоративный стенд.
-      </p>
-</header>
-<!-- =======================
-         СЛАЙДЕР КАРТИНОК
-         ======================= -->
-<section aria-label="Галерея проекта" class="case-section case-section--media parallax-item">
-<div class="media-card slider-zone">
-<!-- Левая вертикальная зона -->
-<div class="nav-zone nav-zone--left" data-nav-zone="images-prev"></div>
-<!-- слайдер с изображениями -->
-<div class="slider slider--images" data-slider="images">
-<div class="slider-track" data-slider-track="images">
-<!-- Слайды картинок рендерятся из JS -->
-</div>
-</div>
-<!-- Правая вертикальная зона -->
-<div class="nav-zone nav-zone--right" data-nav-zone="images-next"></div>
-<!-- точки-пагинация картинок -->
-<div aria-label="Пагинация галереи" class="slider-dots" data-slider-dots="images"></div>
-</div>
-</section>
-<!-- =======================
-         СЛАЙДЕР ТЕКСТОВ (Проблема / Решение / Результат)
-         ======================= -->
-<section aria-label="Описание кейса" class="case-section case-section--text parallax-item">
-<div class="slider-zone">
-<!-- Левая вертикальная зона -->
-<div class="nav-zone nav-zone--left" data-nav-zone="text-prev"></div>
-<!-- слайдер текстовых карточек -->
-<div class="text-slider" data-slider="text">
-<div class="text-slider-track" data-slider-track="text">
-<!-- Карточки текста рендерятся из JS -->
-</div>
-</div>
-<!-- Правая вертикальная зона -->
-<div class="nav-zone nav-zone--right" data-nav-zone="text-next"></div>
-</div>
-<!-- точки-пагинация текстов -->
-<div aria-label="Пагинация описания кейса" class="text-slider-dots" data-slider-dots="text"></div>
-</section>
-</main>
-<footer class="footer">
-  <div class="footer-left">
-    <div class="footer-contacts">
-      <p class="footer-email">jpeg.turbo@gmail.com</p>
-      <p class="footer-location">Permanently located in<br>Lisbon, Portugal 🌴</p>
-    </div>
-  <div class="footer-socials">
-<p><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></p>
-<p><a href="https://t.me/yourusername" target="_blank" rel="noopener noreferrer">Telegram</a></p>
-<p><a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
-</div>
-  </div>
-  <div class="footer-car">
-    <img src="images/logo/car.gif" alt="jpeg turbo car" />
-  </div>
-</footer>
-
 </html>

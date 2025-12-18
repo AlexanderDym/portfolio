@@ -577,7 +577,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.992);
   transition: background 0.5s ease;
 }
 
@@ -651,4 +651,169 @@ img {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* ===============================
+   WORKS GRID
+   =============================== */
+
+.page--works {
+  background-color: var(--bg-main, #000);
+}
+
+/* -------- Page layout -------- */
+
+.works {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 80px 24px 160px;
+}
+
+.works-header {
+  margin-bottom: 64px;
+}
+
+.works-title {
+  font-size: 48px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.works-intro {
+  font-size: 16px;
+  opacity: 0.7;
+  max-width: 520px;
+}
+
+/* -------- Grid -------- */
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+
+/* -------- Card -------- */
+
+.work-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.work-card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: #111;
+}
+
+.work-card-media img,
+.work-card-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(.34,0.6,.64,1);
+}
+
+.work-card:hover .work-card-media img,
+.work-card:hover .work-card-media video {
+  transform: scale(1.04);
+}
+
+/* -------- Text -------- */
+
+.work-card-title {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.work-card-meta {
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+/* -------- Video badge -------- */
+
+.work-card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+}
+
+/* -------- Responsive -------- */
+
+@media (max-width: 1200px) {
+  .works-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .works-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .works {
+    padding-top: 96px;
+  }
+}
+
+@media (max-width: 560px) {
+  .works-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+
+/* =========================
+   INTRO ACTIONS
+   ========================= */
+
+.intro-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.intro-button--secondary {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* ----- make slides not glue together ----- */
+.text-slider-track .text-card {
+  width: calc(100% - 32px); /* 16px слева + 16px справа */
+  margin: 0 auto;           /* центрируем внутри 100% слайда */
+}
+
+/* каждый текстовый СЛАЙД занимает 100% */
+.text-slide {
+  flex: 0 0 100%;
+  padding: 0 8px;          /* вот он — “воздух” между вагонами */
+  box-sizing: border-box;
+}
+
+/* карточка теперь внутри */
+.text-slide .text-card {
+  width: 100%;
+}
+
+
+/* чуть визуально отделим карточки при движении */
+.text-card {
+  box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.06);
 }

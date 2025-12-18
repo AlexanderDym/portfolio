@@ -336,34 +336,186 @@ const CASES = [
   },
 
   {
-    id: "about-me",
-    shortTitle: "Обо мне",
-    title: "Обо мне<br>Creative Direction & Design",
+    id: "third-project",
+    shortTitle: "Video Case",
+    title: "Видео-кейс<br>Showreel",
     intro:
-      "Немного о моём пути, подходе к дизайну и проектах, которые мне близки.",
+      "Кейс, в котором главное — видео. Вертикальный формат 9:16, как в Instagram Reels.",
     theme: {
       bg: "#000000",
-      accent: "#00c2ff",
+      accent: "#ff8a00",
     },
-    images: ["images/third-1.png", "images/about_me/photo2.webp"],
+    images: [
+      {
+        type: "video",
+        src: "images/Fantacy_DC_pt3.mp4",
+        // poster: "images/some-poster.png", // можешь добавить обложку
+      },
+    ],
     textBlocks: [
       {
-        title: "О себе",
+        title: "Задача",
         paragraphs: [
-          "Меня зовут [Твоё имя], я занимаюсь дизайном, бренд-опытом и креативным продакшеном.",
-          "Мне важно не просто сделать красиво — я создаю запоминающиеся смыслы и вовлекающий пользовательский опыт.",
+          "Нужно было показать динамику и настроение бренда через короткий вертикальный ролик.",
         ],
       },
       {
-        title: "Мои ценности",
+        title: "Подход",
         paragraphs: [
-          "Индивидуальность, эффектность, осмысленный подход. Я работаю так, чтобы каждый проект был уникальным и цепляющим.",
-          "Для меня важно, чтобы визуал говорил сам за себя, вовлекал и выделял.",
+          "Мы собрали showreel в формате 9:16, который хорошо смотрится на мобильных устройствах и в соцсетях.",
+        ],
+      },
+      {
+        title: "Результат",
+        paragraphs: [
+          "Видео использовалось в презентациях, на лендингах и в таргетированной рекламе.",
         ],
       },
     ],
   },
 ];
+
+const ABOUT_DATA = {
+  title: "Creative Direction & Design",
+  intro: "Немного о моём пути, подходе и том, что мне важно в работе.",
+  theme: { bg: "#000000", accent: "#00c2ff" },
+  images: [
+    "images/about_me/1.webp",
+    // добавь свои пути
+  ],
+  textBlocks: [
+    {
+      title: "Background",
+      paragraphs: [
+        "Немного о моём пути, подходе и том, что мне важно в работе",
+      ],
+    },
+    {
+      title: "What I do",
+      paragraphs: [
+        "Немного о моём пути, подходе и том, что мне важно в работе",
+      ],
+    },
+    {
+      title: "Values",
+      paragraphs: [
+        "Немного о моём пути, подходе и том, что мне важно в работе",
+      ],
+    },
+  ],
+};
+
+function renderAbout() {
+  // тема
+  document.documentElement.style.setProperty("--bg-main", ABOUT_DATA.theme.bg);
+  document.documentElement.style.setProperty(
+    "--accent-blue",
+    ABOUT_DATA.theme.accent
+  );
+
+  // заголовок + интро
+  const titleEl = document.getElementById("case-title");
+  const introEl = document.getElementById("case-intro");
+  if (titleEl) titleEl.innerHTML = ABOUT_DATA.title;
+  if (introEl) introEl.textContent = ABOUT_DATA.intro;
+
+  // используем твою же логику слайдеров (images/text) как в renderCase
+  const imageSliderEl = document.querySelector('[data-slider="images"]');
+  const imageTrack = document.querySelector('[data-slider-track="images"]');
+  const imageDots = document.querySelector('[data-slider-dots="images"]');
+  const imagePrev = document.querySelector('[data-nav-zone="images-prev"]');
+  const imageNext = document.querySelector('[data-nav-zone="images-next"]');
+
+  if (imageSliderInstance && imageSliderInstance.destroy)
+    imageSliderInstance.destroy();
+
+  if (imageSliderEl && imageTrack && imageDots) {
+    imageTrack.innerHTML = "";
+    imageDots.innerHTML = "";
+
+    const items = ABOUT_DATA.images.map((src) => ({ type: "image", src }));
+
+    imageSliderInstance = createLoopSlider({
+      sliderEl: imageSliderEl,
+      trackEl: imageTrack,
+      dotsEl: imageDots,
+      items,
+      buildSlide: (item) => {
+        const slide = document.createElement("article");
+        slide.className = "slider-slide slider-slide--image";
+        const img = document.createElement("img");
+        img.src = item.src;
+        img.alt = "";
+        img.className = "case-media case-media--image";
+        slide.appendChild(img);
+        return slide;
+      },
+      dotClass: "slider-dot",
+      dotActiveClass: "slider-dot--active",
+      onChange: null,
+      arrowPrevEl: imagePrev,
+      arrowNextEl: imageNext,
+    });
+  }
+
+  const textSliderEl = document.querySelector('[data-slider="text"]');
+  const textTrack = document.querySelector('[data-slider-track="text"]');
+  const textDots = document.querySelector('[data-slider-dots="text"]');
+  const textPrev = document.querySelector('[data-nav-zone="text-prev"]');
+  const textNext = document.querySelector('[data-nav-zone="text-next"]');
+
+  if (textSliderInstance && textSliderInstance.destroy)
+    textSliderInstance.destroy();
+
+  if (textSliderEl && textTrack && textDots) {
+    textTrack.innerHTML = "";
+    textDots.innerHTML = "";
+
+    textSliderInstance = createLoopSlider({
+      sliderEl: textSliderEl,
+      trackEl: textTrack,
+      dotsEl: textDots,
+      items: ABOUT_DATA.textBlocks,
+      buildSlide: (block) => {
+        const card = document.createElement("article");
+        card.className = "text-card";
+
+        const header = document.createElement("header");
+        header.className = "text-card-header";
+
+        const dot = document.createElement("span");
+        dot.className = "text-card-dot";
+
+        const h = document.createElement("h2");
+        h.className = "text-card-title";
+        h.textContent = block.title;
+
+        header.appendChild(dot);
+        header.appendChild(h);
+
+        const body = document.createElement("div");
+        body.className = "text-card-body";
+
+        block.paragraphs.forEach((t) => {
+          const p = document.createElement("p");
+          p.textContent = t;
+          body.appendChild(p);
+        });
+
+        card.appendChild(header);
+        card.appendChild(body);
+        return card;
+      },
+      dotClass: "text-slider-dot",
+      dotActiveClass: "text-slider-dot--active",
+      onChange: null,
+      arrowPrevEl: textPrev,
+      arrowNextEl: textNext,
+    });
+  }
+
+  triggerCaseFade();
+}
 
 // ========= ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ =========
 
@@ -404,12 +556,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  const caseId = document.body.dataset.caseId;
+  const storedCaseId = sessionStorage.getItem("activeCaseId");
+  const bodyCaseId = document.body.dataset.caseId;
+
+  const caseId = storedCaseId || bodyCaseId;
   const indexToRender = CASES.findIndex((c) => c.id === caseId);
+
+  const isAboutPage = document.body.classList.contains("page--about");
+  if (isAboutPage) {
+    renderAbout();
+    return;
+  }
+
   renderCase(indexToRender >= 0 ? indexToRender : currentCaseIndex);
 
-  // запускаем projectSlider только если это главная
-  if (!caseId || caseId === "icon-cyprus") {
+  if (storedCaseId) {
+    sessionStorage.removeItem("activeCaseId");
+  }
+
+  // запускаем projectSlider на любой странице кейса, где он есть
+  if (document.querySelector('[data-slider="projects"]')) {
     initProjectsSlider();
   }
 
@@ -551,6 +717,11 @@ function renderCase(index) {
       dotsEl: textDots,
       items,
       buildSlide: (block) => {
+        // ✅ обёртка-слайд 100% ширины
+        const slide = document.createElement("div");
+        slide.className = "text-slide";
+
+        // ✅ внутренняя карточка со скруглением
         const card = document.createElement("article");
         card.className = "text-card";
 
@@ -579,8 +750,10 @@ function renderCase(index) {
         card.appendChild(header);
         card.appendChild(body);
 
-        return card;
+        slide.appendChild(card);
+        return slide;
       },
+
       dotClass: "text-slider-dot",
       dotActiveClass: "text-slider-dot--active",
       onChange: null,
@@ -616,6 +789,7 @@ function initProjectsSlider() {
     trackEl,
     dotsEl,
     items,
+    startIndexReal: currentCaseIndex,
     buildSlide: (item, index) => {
       const slide = document.createElement("div");
       slide.className = "slider-slide slider-slide--project-name";
@@ -668,6 +842,7 @@ function createLoopSlider({
   onChange,
   arrowPrevEl,
   arrowNextEl,
+  startIndexReal = 0,
 }) {
   if (!items || items.length === 0) {
     return {
@@ -708,7 +883,8 @@ function createLoopSlider({
     dots.push(dot);
   }
 
-  let currentIndex = 1; // индекс в allSlides (0..realCount+1)
+  let currentIndex = Math.max(0, Math.min(realCount - 1, startIndexReal)) + 1;
+  // индекс в allSlides (0..realCount+1)
   let isTransitioning = false;
 
   function setTransition(enable) {
@@ -1020,3 +1196,120 @@ function updateParallax(items) {
     el.style.transform = `translateY(${shift}px)`;
   });
 }
+// ===============================
+// WORKS GRID (Projects Overview)
+// ===============================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const gridEl = document.getElementById("worksGrid");
+  if (!gridEl) return; // если не works.html — выходим
+
+  renderWorksGrid(gridEl);
+});
+
+function renderWorksGrid(container) {
+  // фильтруем: убираем About Me
+  const workCases = CASES.filter((c) => c.id !== "about-me");
+
+  container.innerHTML = "";
+
+  workCases.forEach((project, index) => {
+    const card = document.createElement("article");
+    card.className = "work-card";
+
+    // ---------- Media ----------
+    const media = document.createElement("div");
+    media.className = "work-card-media";
+
+    const firstItem = project.images[0];
+
+    // Видео
+    if (typeof firstItem === "object" && firstItem.type === "video") {
+      const video = document.createElement("video");
+      video.src = firstItem.src;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.preload = "metadata";
+
+      media.appendChild(video);
+
+      const badge = document.createElement("span");
+      badge.className = "work-card-badge";
+      badge.textContent = "Video";
+      media.appendChild(badge);
+
+      card.addEventListener("mouseenter", () => video.play());
+      card.addEventListener("mouseleave", () => video.pause());
+    }
+    // Картинка
+    else {
+      const img = document.createElement("img");
+      img.src = firstItem;
+      img.alt = project.shortTitle || "";
+      media.appendChild(img);
+    }
+
+    // ---------- Text ----------
+    const title = document.createElement("h3");
+    title.className = "work-card-title";
+    title.textContent = project.shortTitle;
+
+    const meta = document.createElement("p");
+    meta.className = "work-card-meta";
+    meta.textContent = extractProjectType(project.title);
+
+    // ---------- Click ----------
+    card.addEventListener("click", () => {
+      openCase(project.id);
+    });
+
+    card.appendChild(media);
+    card.appendChild(title);
+    card.appendChild(meta);
+
+    container.appendChild(card);
+  });
+}
+
+// ===============================
+// HELPERS
+// ===============================
+
+// определяем тип проекта из title
+function extractProjectType(title = "") {
+  const t = title.toLowerCase();
+
+  if (t.includes("video")) return "Video / Showreel";
+  if (t.includes("brand")) return "Brand Experience";
+  if (t.includes("creative")) return "Creative Direction";
+  if (t.includes("design")) return "Design";
+  return "Creative Project";
+}
+
+// открытие кейса
+function openCase(caseId) {
+  sessionStorage.setItem("activeCaseId", caseId);
+  window.location.href = "case.html";
+}
+
+// ===============================
+// INTRO MODAL ACTIONS
+// ===============================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btnWorks = document.getElementById("introWorks");
+  const btnAbout = document.getElementById("introAbout");
+
+  if (btnWorks) {
+    btnWorks.addEventListener("click", () => {
+      window.location.href = "works.html";
+    });
+  }
+
+  if (btnAbout) {
+    btnAbout.addEventListener("click", () => {
+      window.location.href = "about.html";
+    });
+  }
+});
